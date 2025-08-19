@@ -19,8 +19,9 @@ function App() {
       <div className="p-4">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/info/:grade/:class" element={<InfoList />} />
-          <Route path="/info/:grade/:class/:id" element={<InfoDetail />} />
+
+          <Route path="/info" element={<InfoList />} />
+          <Route path="/info/item" element={<InfoDetail />} />
 
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/register" element={<AdminRegister />} />

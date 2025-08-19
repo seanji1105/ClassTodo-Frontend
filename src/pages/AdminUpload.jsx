@@ -4,10 +4,11 @@ import { API_BASE_URL } from "../main.jsx";
 
 function AdminUpload() {
   const [form, setForm] = useState({
-    title: "",
-    content: "",
     grade: "",
     class: "",
+    subject: "",
+    name: "",
+    point: "",
     date: "",
   });
   const [file, setFile] = useState(null);
@@ -31,14 +32,13 @@ function AdminUpload() {
       Object.entries(form).forEach(([key, value]) => {
         formData.append(key, value);
       });
-      if (file) formData.append("img", file); // 👈 서버랑 키 맞춤
+      if (file) formData.append("img", file);
 
       const res = await fetch(`${API_BASE_URL}/upload`, {
         method: "POST",
         body: formData,
       });
 
-      // 서버에서 HTML이 올 수도 있으니 안전하게 처리
       const text = await res.text();
       let data;
       try {
@@ -53,7 +53,14 @@ function AdminUpload() {
       }
 
       setMessage("✅ 업로드 완료!");
-      setForm({ title: "", content: "", grade: "", class: "", date: "" });
+      setForm({
+        grade: "",
+        class: "",
+        subject: "",
+        name: "",
+        point: "",
+        date: "",
+      });
       setFile(null);
       if (fileInputRef.current) fileInputRef.current.value = "";
     } catch (err) {
@@ -64,33 +71,10 @@ function AdminUpload() {
 
   return (
     <div className="max-w-xl mx-auto mt-12 bg-white shadow-md rounded-2xl p-6">
-      <h1 className="text-2xl font-bold mb-6">게시물 업로드</h1>
+      <h1 className="text-2xl font-bold mb-6">수행노트 업로드</h1>
+      <h2 className="text-lg text-gray-600 mb-4">관리자</h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block mb-1 font-medium">제목</label>
-          <input
-            type="text"
-            name="title"
-            value={form.title}
-            onChange={handleChange}
-            className="w-full border rounded px-3 py-2"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block mb-1 font-medium">내용</label>
-          <textarea
-            name="content"
-            value={form.content}
-            onChange={handleChange}
-            rows="5"
-            className="w-full border rounded px-3 py-2"
-            required
-          />
-        </div>
-
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block mb-1 font-medium">학년</label>
@@ -99,6 +83,7 @@ function AdminUpload() {
               name="grade"
               value={form.grade}
               onChange={handleChange}
+              placeholder="예: 1"
               className="w-full border rounded px-3 py-2"
               required
             />
@@ -110,10 +95,55 @@ function AdminUpload() {
               name="class"
               value={form.class}
               onChange={handleChange}
+              placeholder="예: 3"
               className="w-full border rounded px-3 py-2"
               required
             />
           </div>
+        </div>
+
+        <div>
+          <label className="block mb-1 font-medium">과목</label>
+          <select
+            name="subject"
+            value={form.subject}
+            onChange={handleChange}
+            className="w-full border rounded px-3 py-2"
+            required
+          >
+            <option value="">선택</option>
+            <option value="국어">국어</option>
+            <option value="수학">수학</option>
+            <option value="영어">영어</option>
+            <option value="한국사">한국사</option>
+            <option value="사회">사회</option>
+            <option value="과학">과학</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block mb-1 font-medium">수행 주제</label>
+          <input
+            type="text"
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            placeholder="수행 주제를 입력하세요"
+            className="w-full border rounded px-3 py-2"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block mb-1 font-medium">점수</label>
+          <input
+            type="text"
+            name="point"
+            value={form.point}
+            onChange={handleChange}
+            placeholder="예: 90"
+            className="w-full border rounded px-3 py-2"
+          />
         </div>
 
         <div>
@@ -139,13 +169,17 @@ function AdminUpload() {
           />
         </div>
 
-        {message && <div className="text-sm text-center mt-2">{message}</div>}
+        {message && (
+          <div className="text-sm text-center mt-2 text-blue-600">
+            {message}
+          </div>
+        )}
 
         <button
           type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
         >
-          업로드
+          제출
         </button>
       </form>
     </div>

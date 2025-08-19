@@ -1,22 +1,25 @@
 // src/pages/InfoDetail.jsx
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { API_BASE_URL } from "../main.jsx";
 
 function InfoDetail() {
-  const { grade, class: classNum, id } = useParams();
+  const [searchParams] = useSearchParams();
+  const id = searchParams.get("id");
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/info/${grade}/${classNum}/${id}`, {
+    if (!id) return setLoading(false);
+
+    fetch(`${API_BASE_URL}/info/item?id=${id}`, {
       credentials: "include",
     })
       .then((res) => res.json())
       .then((data) => setPost(data))
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
-  }, [grade, classNum, id]);
+  }, [id]);
 
   if (loading) {
     return <div className="p-6">불러오는 중...</div>;
