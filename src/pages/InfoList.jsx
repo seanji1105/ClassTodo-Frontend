@@ -1,7 +1,7 @@
 // src/pages/InfoList.jsx
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { API_BASE_URL } from "../index.jsx";
+import { API_BASE_URL } from "../main.jsx";
 
 function InfoList() {
   const { grade, class: classNum } = useParams();

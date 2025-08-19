@@ -1,14 +1,13 @@
 // src/pages/Home.jsx
 import React, { useEffect, useState } from "react";
-import { API_BASE_URL } from "../index.jsx";
+import { API_BASE_URL } from "../main.jsx";
 
 function Home() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // 로그인 여부 확인 (세션 기반)
     fetch(`${API_BASE_URL}/`, {
-      credentials: "include", // 세션 쿠키 포함
+      credentials: "include",
     })
       .then((res) => res.json())
       .then((data) => setUser(data.user))
