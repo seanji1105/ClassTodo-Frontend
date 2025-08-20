@@ -33,15 +33,20 @@ function InfoDetail() {
     <div className="max-w-3xl mx-auto mt-8 bg-white shadow-md rounded-2xl p-6">
       <h1 className="text-2xl font-bold mb-2">{post.name || "제목 없음"}</h1>
       <div className="text-sm text-gray-500 mb-4">
-        {post.date ? new Date(post.date).toLocaleString() : ""}
+        {post.date ? new Date(post.date).toLocaleDateString() : ""}
       </div>
 
-      {post.img && (
-        <img
-          src={`${API_BASE_URL}/uploads/${post.img}`}
-          alt="첨부 이미지"
-          className="max-h-80 object-contain mb-4 rounded"
-        />
+      {post.imgs && post.imgs.length > 0 && (
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          {post.imgs.map((img, idx) => (
+            <img
+              key={idx}
+              src={`${img}`}
+              alt={`첨부 이미지 ${idx + 1}`}
+              className="max-h-80 object-contain rounded"
+            />
+          ))}
+        </div>
       )}
 
       <p className="text-gray-800 whitespace-pre-line">{post.content}</p>

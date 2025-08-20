@@ -9,10 +9,11 @@ function AdminUpload() {
     class: "",
     subject: "",
     name: "",
+    content: "",
     point: "",
     date: "",
   });
-  const [file, setFile] = useState(null);
+  const [files, setFiles] = useState([]);
   const [message, setMessage] = useState("");
   const fileInputRef = useRef();
 
@@ -21,7 +22,7 @@ function AdminUpload() {
   };
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    setFiles(Array.from(e.target.files));
   };
 
   const handleSubmit = async (e) => {
@@ -33,11 +34,13 @@ function AdminUpload() {
       Object.entries(form).forEach(([key, value]) => {
         formData.append(key, value);
       });
-      if (file) formData.append("img", file);
+      if (files.length > 0)
+        files.forEach((file) => formData.append("imgs", file));
 
       const res = await fetch(`${API_BASE_URL}/upload`, {
         method: "POST",
         body: formData,
+        credentials: "include",
       });
 
       const text = await res.text();
@@ -62,7 +65,7 @@ function AdminUpload() {
         point: "",
         date: "",
       });
-      setFile(null);
+      setFiles([]);
       if (fileInputRef.current) fileInputRef.current.value = "";
     } catch (err) {
       console.error(err);
@@ -187,6 +190,7 @@ function AdminUpload() {
           <input
             type="file"
             accept="image/*"
+            multiple
             onChange={handleFileChange}
             ref={fileInputRef}
             className="w-full"

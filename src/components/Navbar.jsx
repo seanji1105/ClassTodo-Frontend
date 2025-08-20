@@ -16,12 +16,6 @@ function Navbar() {
         >
           관리자 로그인
         </Link>
-        <Link
-          to="/admin/upload"
-          className="text-gray-700 hover:text-blue-600 transition"
-        >
-          업로드
-        </Link>
       </div>
     </nav>
   );
