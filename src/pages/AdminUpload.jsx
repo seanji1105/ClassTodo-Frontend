@@ -4,6 +4,7 @@ import { API_BASE_URL } from "../main.jsx";
 
 function AdminUpload() {
   const [form, setForm] = useState({
+    school: "",
     grade: "",
     class: "",
     subject: "",
@@ -77,6 +78,18 @@ function AdminUpload() {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
           <div>
+            <label className="block mb-1 font-medium">학교</label>
+            <input
+              type="text"
+              name="school"
+              value={form.school}
+              onChange={handleChange}
+              placeholder="예: --고"
+              className="w-full border rounded px-3 py-2"
+              required
+            />
+          </div>
+          <div>
             <label className="block mb-1 font-medium">학년</label>
             <input
               type="text"
@@ -133,7 +146,18 @@ function AdminUpload() {
             required
           />
         </div>
-
+        <div>
+          <label className="block mb-1 font-medium">상세 내용</label>
+          <input
+            type="text"
+            name="content"
+            value={form.content}
+            onChange={handleChange}
+            placeholder="수행 내용을 입력하세요"
+            className="w-full border rounded px-3 py-2"
+            required
+          />
+        </div>
         <div>
           <label className="block mb-1 font-medium">점수</label>
           <input

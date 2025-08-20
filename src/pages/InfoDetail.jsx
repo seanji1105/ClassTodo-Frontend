@@ -31,7 +31,7 @@ function InfoDetail() {
 
   return (
     <div className="max-w-3xl mx-auto mt-8 bg-white shadow-md rounded-2xl p-6">
-      <h1 className="text-2xl font-bold mb-2">{post.title || "제목 없음"}</h1>
+      <h1 className="text-2xl font-bold mb-2">{post.name || "제목 없음"}</h1>
       <div className="text-sm text-gray-500 mb-4">
         {post.date ? new Date(post.date).toLocaleString() : ""}
       </div>
